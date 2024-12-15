@@ -56,6 +56,9 @@ in
       # -----
 
       GOBOHIDE_FS = yes;
+
+      # Testing with overlayfs (previously required patches)
+      OVERLAY_FS = yes;
     };
     features = {
       #logo = true;
