@@ -57,8 +57,20 @@ in
         type = "dir";
         mode = "755";
       };
+      "/Users/SYSTEM/upperdir" = {
+        type = "dir";
+        mode = "755";
+      };
+      "/Users/SYSTEM/workdir" = {
+        type = "dir";
+        mode = "755";
+      };
+      "/Users/SYSTEM/overlaid" = {
+        type = "dir";
+        mode = "755";
+      };
     };
-    wip.stage-1.contents = {
+    wip.stage-1.archive.contents = {
       "/etc/issue" = writeTextDir "/etc/issue" ''
 
         Gobohide test system
@@ -194,11 +206,35 @@ in
         gobohide --hide /tmp
         )
 
-        printf "\n\n:: System directories are now hidden.\n\n"
+        printf "\n\n:: Checking overlayfs.\n\n"
 
         (
         set -x
+
+        # Testing overlayfs
+        mount -t overlay overlay -o lowerdir=/etc,upperdir=/Users/SYSTEM/upperdir,workdir=/Users/SYSTEM/workdir /Users/SYSTEM/overlaid
+
+        touch /Users/SYSTEM/overlaid/success
+        mkdir /Users/SYSTEM/overlaid/hidden
+        gobohide --hide /Users/SYSTEM/overlaid/hidden
+
+        ls -l /Users/SYSTEM/workdir
+        ls -l /Users/SYSTEM/workdir/work
+        )
+
+        printf "\n\n==========================================\n"
+
+        printf "\n\n:: Listing of /.\n\n"
+        (
+        set -x
         ls -l /
+        )
+
+        printf "\n\n:: Listing overlayfs.\n\n"
+        (
+        set -x
+        ls -l /Users/SYSTEM/upperdir
+        ls -l /Users/SYSTEM/overlaid
         )
 
         printf "\n\n"
