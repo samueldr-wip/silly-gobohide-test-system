@@ -11,6 +11,7 @@ let
     { stdenv
     , lib
     , fetchFromGitHub
+    , fetchpatch
     , pkg-config
     , autoconf, automake
     , gettext
@@ -27,6 +28,14 @@ let
         rev = "${version}";
         sha256 = "0f5aag33lanh00yv64va50apwg4qv8rnd7jqpl8avdfh8aznk9fi";
       };
+
+      patches = [
+        # https://github.com/gobolinux/GoboHide/pull/8
+        (fetchpatch {
+          url = "https://github.com/samueldr/GoboHide/commit/0978acbff7f5829008fc8433c7fc8fdd52da3571.patch";
+          hash = "sha256-bp+JPMmDpCm3DieSva9Ej0azzL5gqTS0OTdHUob7wkg=";
+        })
+      ];
 
       buildInputs = [
         autoconf
