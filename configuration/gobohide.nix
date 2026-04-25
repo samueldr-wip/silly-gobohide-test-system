@@ -43,7 +43,7 @@ let
 
       meta = with lib; {
         description = "GoboHide userspace client";
-        homepage    = https://github.com/gobolinux/GoboHide;
+        homepage    = "https://github.com/gobolinux/GoboHide";
         license     = licenses.gpl2Plus;
         #maintainers = with maintainers; [ samueldr ];
         platforms   = platforms.linux;
