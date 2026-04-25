@@ -9,7 +9,7 @@ let
   ;
 
   inherit (pkgs)
-    runCommandNoCC
+    runCommand
     writeScript
     writeScriptBin
     writeText
@@ -118,7 +118,7 @@ in
         exec linuxrc
       '';
 
-      extraUtils = runCommandNoCC "wip-gobohide--initramfs-extraUtils" {
+      extraUtils = runCommand "wip-gobohide--initramfs-extraUtils" {
         passthru = {
           inherit extraUtils;
         };
@@ -128,7 +128,7 @@ in
       '';
 
       # POSIX requires /bin/sh
-      "/bin/sh" = runCommandNoCC "wip-gobohide--initramfs-extraUtils-bin-sh" {} ''
+      "/bin/sh" = runCommand "wip-gobohide--initramfs-extraUtils-bin-sh" {} ''
         mkdir -p $out/bin
         ln -s ${extraUtils}/bin/sh $out/bin/sh
       '';
