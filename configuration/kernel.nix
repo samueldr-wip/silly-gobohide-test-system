@@ -5,7 +5,7 @@
     { stdenv }:
 
     stdenv.mkDerivation {
-      version = "7.0.0";
+      version = "7.1.0";
       src = builtins.fetchGit /Users/samuel/tmp/linux/gobohide;
     }
   ) {};
