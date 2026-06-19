@@ -238,6 +238,20 @@ in
         )
 
         printf "\n\n"
+
+        printf "Testing base function:\n"
+        if test -e /etc; then
+          printf "  SUCCESS -> /etc does exist.\n"
+          if ! ls / | grep /etc; then
+            printf "  SUCCESS -> /etc was hidden from listing.\n"
+          else
+            printf "  FAIL -> /etc was not hidden from listing.\n"
+            exit 1
+          fi
+        else
+          printf "  FAIL -> /etc could not be accessed.\n"
+          exit 1
+        fi
       '')
     ];
 
