@@ -173,10 +173,6 @@ in
           printf '\e[%d;0H' "$@" > /dev/tty0
         }
 
-        pr_info() {
-          printf '\e[2K\r%s' "$@" > /dev/tty0 
-        }
-
         ${
         # See https://github.com/torvalds/linux/blob/b01fe98d34f3bed944a93bd8119fed80c856fad8/usr/default_cpio_list
         "rmdir /root"
