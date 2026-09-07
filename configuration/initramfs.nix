@@ -164,7 +164,7 @@ in
 
       (writeScriptBin "gobohide-init" ''
         #!/bin/sh
-
+        (
         set -e
         PS4=" $ "
         #set -x
@@ -236,18 +236,38 @@ in
         printf "\n\n"
 
         printf "Testing base function:\n"
+
+        if (
         if test -e /etc; then
           printf "  SUCCESS -> /etc does exist.\n"
-          if ! ls / | grep /etc; then
-            printf "  SUCCESS -> /etc was hidden from listing.\n"
-          else
+          if ls / | grep '^etc$'; then
             printf "  FAIL -> /etc was not hidden from listing.\n"
             exit 1
+          else
+            printf "  SUCCESS -> /etc was hidden from listing.\n"
           fi
         else
           printf "  FAIL -> /etc could not be accessed.\n"
           exit 1
         fi
+        ); then
+          printf "\n"
+          printf "\n"
+          printf "Everything seems to be fine!\n"
+          printf "\n"
+          printf "\n"
+        else
+          printf "\n"
+          printf "\n"
+          printf "Unexpected failure!\n"
+          printf "\n"
+          printf "\n"
+        fi
+        ) || printf "\n  FAIL see previous log entries...\n\n"
+
+        printf "... powering off!\n\n"
+        set -x
+        poweroff
       '')
     ];
 
