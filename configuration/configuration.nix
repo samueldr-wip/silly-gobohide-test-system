@@ -16,16 +16,20 @@ in
   boot.cmdline = mkMerge [
     [
       "vt.global_cursor_default=0"
-    ]
-    [
-      #                 BG                                 FG
-      #                blk, red, grn, ylw, blu, mgt, cyn, wht, gry,bred,bgrn,bylw,bblu,bmgt,bcyn,bwht
-      # White on purplish blue
-      "vt.default_red=0x46,0xD0,0x00,0xB0,0x00,0xA0,0x4F,0xFF,0x99,0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF"
-      "vt.default_grn=0x26,0x00,0xB0,0x66,0x00,0x00,0xB3,0xFF,0x99,0x00,0xFF,0xFF,0x00,0x00,0xFF,0xFF"
-      "vt.default_blu=0x7E,0x00,0x00,0x00,0xB0,0xB0,0xC5,0xFF,0x99,0x00,0x00,0x00,0xFF,0xFF,0xFF,0xFF"
+      "console=tty0"
+      "console=ttyS0"
     ]
   ];
+
+  device.config.qemu = {
+    qemuOptions = lib.mkAfter [
+      "-display" "none"
+      # Using `-serial stdio` implies/conflicts with `-nographic`.
+      #"-nographic"
+    ];
+    # Don't multiplex monitor on standard input/output.
+    serialMode = "stdio";
+  };
 
   wip.kernel = {
     structuredConfig = with lib.kernel; {
